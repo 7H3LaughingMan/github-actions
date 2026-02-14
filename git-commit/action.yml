@@ -1,0 +1,27 @@
+name: Git Commit
+description: A simple action used for commiting files.
+
+inputs:
+  user-name:
+    description: The name of the user you want to commit files with.
+    default: "github-actions[bot]"
+  user-email:
+    description: The email of the user you want to commit files with.
+    default: "github-actions[bot]@users.noreply.github.com"
+  message:
+    description: The message you want to use when committing files.
+    default: "Commiting Files"
+  token:
+    description: Personal Access Token (PAT) used to commit files with.
+    default: ${{ github.token }}
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        git config --global user.name '${{ inputs.user-name }}'
+        git config --global user.email '${{ inputs.user-email }}'
+        git commit -a -m "${{ inputs.message }}"
+        git push "https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git" HEAD:${{ github.ref_name }}
+

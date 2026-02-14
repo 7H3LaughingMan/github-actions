@@ -6,7 +6,7 @@ inputs:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
   token:
-    description: Personal access token (PAT) used to post the repository_dispatch event.
+    description: Personal Access Token (PAT) used to post the repository_dispatch event.
     default: ${{ github.token }}
   event_type:
     description: The event_type that will be posted.

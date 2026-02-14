@@ -8,6 +8,6 @@ runs:
       shell: bash
       run: npx tsc --noEmit
 
-    - id: typescript-compiler
+    - id: eslint
       shell: bash
       run: npx eslint
