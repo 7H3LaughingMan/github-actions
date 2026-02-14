@@ -1,0 +1,33 @@
+name: Setup Node
+description: A simple action that checks out a repository and sets up Node.
+
+inputs:
+  use-cache:
+    description: "Set to true to enable automatic caching."
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - id: checkout
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    
+    - id: setup-node
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: 'package.json'
+        package-manager-cache: false
+    
+    - if: inputs.use-cache == 'true'
+      id: cache
+      uses: actions/cache@v5
+      with:
+        path: node_modules/
+        key: npm-${{ hashFiles('package-lock.json') }}
+    
+    - if: inputs.use-cache == 'false' || (inputs.use-cache == 'true' && steps.cache.outputs.cache-hit != 'true')
+      id: clean-install
+      shell: bash
+      run: npm clean-install

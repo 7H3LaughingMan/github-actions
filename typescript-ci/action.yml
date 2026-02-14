@@ -1,0 +1,13 @@
+name: TypeScript CI
+description: A simple action that checks out a repository and sets up Node.
+
+runs:
+  using: "composite"
+  steps:   
+    - id: typescript-compiler
+      shell: bash
+      run: npx tsc --noEmit
+
+    - id: typescript-compiler
+      shell: bash
+      run: npx eslint
